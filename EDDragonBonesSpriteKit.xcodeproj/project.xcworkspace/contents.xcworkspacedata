@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:DragonBonesSpriteKit.xcodeproj">
+      location = "self:/Users/Salo/Production/DragonBonesSpriteKit/EDDragonBonesSpriteKit.xcodeproj">
    </FileRef>
 </Workspace>
