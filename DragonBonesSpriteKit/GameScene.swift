@@ -18,6 +18,7 @@ class GameScene: SKScene {
         let loader = EDArmatureLoader(filePath: JSONPath, atlasDictionary: atlasDictionary)
         
         let node = loader.loadNode(withName: "injuredfarmer")
+        node.playAnimation("idle")
         self.addChild(node)
         
     }

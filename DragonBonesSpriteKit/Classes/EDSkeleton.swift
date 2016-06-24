@@ -34,6 +34,21 @@ struct EDSkeleton {
                 self.zRotation = zRotation
                 self.position = position
             }
+            
+            init(json: JSON, defaultTransform: Transform) {
+                let offsetSkX = json["skX"].double ?? 0
+                let offsetSkY = json["skY"].double ?? 0
+                let offsetX = CGFloat(json["x"].double ?? 0)
+                let offsetY = -CGFloat(json["y"].double ?? 0)
+                let offsetScX = CGFloat(json["scX"].double ?? 1)
+                let offsetScY = CGFloat(json["scY"].double ?? 1)
+                let offsetZRotation = -CGFloat(((offsetSkX + offsetSkY) / 2 ?? 0) * M_PI) / 180
+                
+                scX = defaultTransform.scX * offsetScX
+                scY = defaultTransform.scY * offsetScY
+                zRotation = defaultTransform.zRotation + offsetZRotation
+                position = CGPoint(x: defaultTransform.position.x + offsetX, y: defaultTransform.position.y + offsetY)
+            }
         }
         
         struct Bone {
@@ -49,7 +64,10 @@ struct EDSkeleton {
         }
         
         struct Action {
-            var gotoAndPlay: String
+            let gotoAndPlay: String
+            init(json: JSON) {
+                gotoAndPlay = json["gotoAndPlay"].string!
+            }
         }
         
         struct IK {
@@ -106,54 +124,134 @@ struct EDSkeleton {
         
         struct Animation {
             
-            struct Bone {
-                struct Frame {
-                    var tweenEasing: Int?
-                    var transform: Transform
-                    var duration: Int
-                }
-                
-                var frame: [Frame]
-                var name: String
-            }
-            
             struct Slot {
                 struct Frame {
                     struct Color {
-                        
+                        let alpha: CGFloat
+                        init(json: JSON) {
+                            alpha = 1 - CGFloat(json["aM"].int ?? 0)
+                        }
                     }
                     
-                    var tweenEasing: Int?
-                    var color: Color
-                    var duration: Int
+                    let tweenEasing: Int?
+                    let color: Color
+                    let displayIndex: Int
+                    let duration: NSTimeInterval
                 }
                 
-                var name: String
-                var frame: [Frame]
+                let name: String
+                let frame: [Frame]
+                
+                init(json: JSON, frameRate: Int) {
+                    name = json["name"].string!
+                    var theFrame: [Frame] = []
+                    
+                    var lastItem: JSON?
+                    let frameJSON = json["frame"].array ?? []
+                    for item in frameJSON {
+                        let tweenEasing = item["tweenEasing"].int
+                        let color = Frame.Color(json: item["color"])
+                        let duration: NSTimeInterval
+                        if let lastItem = lastItem {
+                            duration = 1.0 / NSTimeInterval(frameRate) * NSTimeInterval(lastItem["duration"].int!)
+                        } else {
+                            duration = 1.0 / NSTimeInterval(frameRate) * NSTimeInterval(frameJSON.last!["duration"].int!)
+                        }
+                        
+                        let frame = Frame(tweenEasing: tweenEasing,
+                                          color: color,
+                                          displayIndex: item["displayIndex"].int ?? 0,
+                                          duration: duration)
+                        theFrame.append(frame)
+                        
+                        lastItem = item
+                    }
+                    frame = theFrame
+                }
+            }
+            
+            struct Bone {
+                struct Frame {
+                    let tweenEasing: Int?
+                    let transform: Transform
+                    let duration: NSTimeInterval
+                }
+                
+                let frame: [Frame]
+                let name: String
+                
+                init(json: JSON, boneTransforms: [String: Transform], frameRate: Int) {
+                    name = json["name"].string!
+                    var theFrame: [Frame] = []
+                    
+                    var lastItem: JSON?
+                    let frameJSON = json["frame"].array ?? []
+                    for item in frameJSON {
+                        let tweenEasing = item["tweenEasing"].int
+                        let transform = Transform(json: item["transform"], defaultTransform: boneTransforms[name]!)
+                        let duration: NSTimeInterval
+                        if let lastItem = lastItem {
+                            duration = 1.0 / NSTimeInterval(frameRate) * NSTimeInterval(lastItem["duration"].int!)
+                        } else {
+                            duration = 1.0 / NSTimeInterval(frameRate) * NSTimeInterval(frameJSON.last!["duration"].int!)
+                        }
+                        
+                        let frame = Frame(tweenEasing: tweenEasing,
+                                          transform: transform,
+                                          duration: duration)
+                        theFrame.append(frame)
+                        
+                        lastItem = item
+                    }
+                    
+                    frame = theFrame
+                }
+                
             }
             
             struct FFD {
                 
             }
             
-            var bone: [Bone]
-            var duration: Int
-            var frame: [AnyObject] // todo
-            var playTimes: Int
-            var slot: [Slot]
-            var name: String
-            var ffd: [FFD]
+            let playTimes: Int?
+            let slot: [Slot]
+            let bone: [Bone]
+            let duration: Int
+            let name: String
+            
+            // todo:
+            var frame: [AnyObject]? // todo
+            var ffd: [FFD]?
+            
+            init(json: JSON, boneTransforms: [String: Transform], frameRate: Int) {
+                name = json["name"].string!
+                playTimes = json["playTimes"].int
+                duration = json["duration"].int!
+                var theSlot: [Slot] = []
+                for item in json["slot"].array ?? [] {
+                    theSlot.append(Slot(json: item, frameRate: frameRate))
+                }
+                slot = theSlot
+                
+                var theBone: [Bone] = []
+                for item in json["bone"].array ?? [] {
+                    theBone.append(Bone(json: item, boneTransforms: boneTransforms, frameRate: frameRate))
+                }
+                bone = theBone
+            }
         }
         
         struct Slot {
             let name: String
             let parent: String
             let z: Int
+            let displayIndex: Int
             
             init(json: JSON) {
                 name = json["name"].string!
                 parent = json["parent"].string!
                 z = json["z"].int ?? 0
+                displayIndex = json["displayIndex"].int ?? 0
             }
         }
         
@@ -163,20 +261,23 @@ struct EDSkeleton {
         let bone: [Bone]
         let skin: [Skin]
         let slot: [Slot]
-        
+        let animation: [Animation]
+        let defaultActions: [Action]
         
         // todo
-        var defaultActions: [Action]?
         var ik: [IK]?
-        var animation: [Animation]?
         
         init(json: JSON) {
+            var boneTransforms: [String: Transform] = [:]
+            
             frameRate = json["frameRate"].int ?? 24
             name = json["name"].string!
             type = json["type"].string!
             var theBone: [Bone] = []
             for item in json["bone"].array ?? [] {
-                theBone.append(Bone(json: item))
+                let bone = Bone(json: item)
+                boneTransforms[bone.name] = bone.transform
+                theBone.append(bone)
             }
             bone = theBone
             var theSkin: [Skin] = []
@@ -189,6 +290,17 @@ struct EDSkeleton {
                 theSlot.append(Slot(json: item))
             }
             slot = theSlot
+            var theAnimation: [Animation] = []
+            for item in json["animation"].array ?? [] {
+                theAnimation.append(Animation(json: item, boneTransforms: boneTransforms, frameRate: frameRate))
+            }
+            animation = theAnimation
+            var theDefaultActions: [Action] = []
+            for item in json["theDefaultActions"].array ?? [] {
+                theDefaultActions.append(Action(json: item))
+            }
+            defaultActions = theDefaultActions
+            
         }
     }
 
