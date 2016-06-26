@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "398B227A1D1C22D80007A26C"
-               BuildableName = "EDDragonBonesSpriteKit.app"
+               BuildableName = "EDDragonBonesSpriteKitDemo.app"
                BlueprintName = "EDDragonBonesSpriteKitDemo"
                ReferencedContainer = "container:EDDragonBonesSpriteKit.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "398B227A1D1C22D80007A26C"
-            BuildableName = "EDDragonBonesSpriteKit.app"
+            BuildableName = "EDDragonBonesSpriteKitDemo.app"
             BlueprintName = "EDDragonBonesSpriteKitDemo"
             ReferencedContainer = "container:EDDragonBonesSpriteKit.xcodeproj">
          </BuildableReference>
@@ -56,7 +56,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "398B227A1D1C22D80007A26C"
-            BuildableName = "EDDragonBonesSpriteKit.app"
+            BuildableName = "EDDragonBonesSpriteKitDemo.app"
             BlueprintName = "EDDragonBonesSpriteKitDemo"
             ReferencedContainer = "container:EDDragonBonesSpriteKit.xcodeproj">
          </BuildableReference>
@@ -75,7 +75,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "398B227A1D1C22D80007A26C"
-            BuildableName = "EDDragonBonesSpriteKit.app"
+            BuildableName = "EDDragonBonesSpriteKitDemo.app"
             BlueprintName = "EDDragonBonesSpriteKitDemo"
             ReferencedContainer = "container:EDDragonBonesSpriteKit.xcodeproj">
          </BuildableReference>
