@@ -12,10 +12,8 @@ import SwiftyJSON
 class EDArmatureLoader {
     
     var armatureConfig: [String: EDSkeleton.Armature] = [:]
-    let atlasDictionary: [String: SKTextureAtlas]
     
-    init(filePath: String, atlasDictionary: [String: SKTextureAtlas]) {
-        self.atlasDictionary = atlasDictionary
+    init(filePath: String) {
         
         let JSONData = NSData(contentsOfFile: filePath)!
         let json = JSON(data: JSONData)
@@ -27,19 +25,19 @@ class EDArmatureLoader {
         }
     }
     
-    func loadNode(withName name: String) -> EDArmatureNode {
+    func loadNode(named name: String) -> EDArmatureNode {
         return self.loadRequireArmature(name)
     }
     
     private func loadRequireArmature(name: String) -> EDArmatureNode {
-        return EDArmatureNode(armature: armatureConfig[name]!, atlasDictionary: self.atlasDictionary, loader: self)
+        return EDArmatureNode(armature: armatureConfig[name]!, loader: self)
     }
 
 }
 
 extension SKAction {
     
-    class func boneFrameAction(frame: [EDSkeleton.Armature.Animation.Bone.Frame]) -> SKAction {
+    class func boneFrameAction(frame: [EDSkeleton.Armature.Animation.Bone.Frame], duration: NSTimeInterval) -> SKAction {
         var sequenceActionArray: [SKAction] = []
         for theFrame in frame {
             let duration = theFrame.duration
@@ -51,55 +49,64 @@ extension SKAction {
             let groupAction = SKAction.group([positionAction, scaleXAction, scaleYAction, zRotationAction])
             sequenceActionArray.append(groupAction)
         }
-        return SKAction.repeatActionForever(SKAction.sequence(sequenceActionArray))
+        let sequenceAction = SKAction.sequence(sequenceActionArray)
+        sequenceAction.duration = duration
+        return SKAction.repeatActionForever(sequenceAction)
     }
     
-    class func slotFrameAction(frame: [EDSkeleton.Armature.Animation.Slot.Frame]) -> SKAction {
+    class func slotFrameAction(frame: [EDSkeleton.Armature.Animation.Slot.Frame], node: EDSlotNode, duration: NSTimeInterval) -> SKAction {
         var sequenceActionArray: [SKAction] = []
+        
         for theFrame in frame {
+            var actionArray: [SKAction] = []
+            let displayAction = node.displayAction(theFrame.displayIndex)
+            
             let duration = theFrame.duration
-            let alphaAction = SKAction.fadeAlphaTo(theFrame.color.alpha, duration: duration)
-            let displayIndex = theFrame.displayIndex
-            let textureAction = SKAction.customActionWithDuration(duration, actionBlock: { (node: SKNode, elapsedTime: CGFloat) in
-                if let node = node as? EDSlotNode {
-                    node.displayIndex = displayIndex
-                }
-            })
-            let groupAction = SKAction.group([alphaAction, textureAction])
+            if theFrame.displayIndex != -1 {
+                let alphaAction = SKAction.fadeAlphaTo(theFrame.color.alpha, duration: duration)
+                actionArray.append(alphaAction)
+            } else {
+                actionArray.append(SKAction.waitForDuration(duration))
+            }
+            actionArray.append(displayAction)
+            let groupAction = SKAction.group(actionArray)
             sequenceActionArray.append(groupAction)
         }
-        return SKAction.repeatActionForever(SKAction.sequence(sequenceActionArray))
+        let sequenceAction = SKAction.sequence(sequenceActionArray)
+        sequenceAction.duration = duration
+        return SKAction.repeatActionForever(sequenceAction)
     }
     
 }
 
 class EDSlotNode: SKNode {
-    var displayIndex: Int {
-        didSet {
-            self.reloadDisplayIndex()
-        }
-    }
     
-    func reloadDisplayIndex() {
+    func displayAction(index: Int) -> SKAction {
+        var actionArray: [SKAction] = []
         for idx in 0 ..< self.children.count {
-            let isCurrent = (idx == self.displayIndex)
+            let isCurrent = (idx == index)
             let node = self.children[idx]
-            if isCurrent {
-                switch node {
-                case let n as EDArmatureNode:
-                    self.transform = n.parentTransform!
-                case let n as EDDisplayNode:
-                    self.transform = n.parentTransform
-                default:()
+        
+            let displayAction = SKAction.runBlock({
+                if isCurrent {
+                    switch node {
+                    case let n as EDArmatureNode:
+                        self.transform = n.parentTransform!
+                    case let n as EDDisplayNode:
+                        self.transform = n.parentTransform
+                    default:()
+                    }
                 }
-            }
-            node.hidden = !isCurrent
+                
+                node.hidden = !isCurrent
+            })
+            actionArray.append(displayAction)
         }
+        
+        return SKAction.group(actionArray)
     }
     
     init(slot: EDSkeleton.Armature.Slot) {
-        self.displayIndex = slot.displayIndex
-        
         super.init()
         
         self.name = slot.name
@@ -136,7 +143,7 @@ class EDArmatureNode: SKNode {
     private var boneDictionary: [String: SKNode] = [:]
     private var slotDictionary: [String: EDSlotNode] = [:]
     
-    init(armature: EDSkeleton.Armature, atlasDictionary: [String: SKTextureAtlas], loader: EDArmatureLoader, parentTransform: EDSkeleton.Armature.Transform? = nil) {
+    init(armature: EDSkeleton.Armature, loader: EDArmatureLoader, parentTransform: EDSkeleton.Armature.Transform? = nil) {
         
         self.parentTransform = parentTransform
         
@@ -164,30 +171,17 @@ class EDArmatureNode: SKNode {
             slotDictionary[slot.name] = slotNode
         }
         
-        for animation in armature.animation {
-            boneAnimationDictionary[animation.name] = [:]
-            slotAnimationDictionary[animation.name] = [:]
-            for bone in animation.bone {
-                let action = SKAction.boneFrameAction(bone.frame)
-                boneAnimationDictionary[animation.name]![bone.name] = action
-            }
-            
-            for slot in animation.slot {
-                let action = SKAction.slotFrameAction(slot.frame)
-                slotAnimationDictionary[animation.name]![slot.name] = action
-            }
-        }
-        
         for skin in armature.skin {
             for slot in skin.slot {
                 let node = slotDictionary[slot.name]!
-                for display in slot.display {
+                for i in 0 ..< slot.display.count {
+                    let display = slot.display[i]
                     switch display.type {
                     case .image:
                         let components = display.name.componentsSeparatedByString("/")
                         let atlasName = components[0]
-                        let textureName = components[1]
-                        let atlas = atlasDictionary[atlasName]!
+                        let textureName = components[1].stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+                        let atlas = SKTextureAtlas(named: atlasName)
                         let texture = atlas.textureNamed(textureName)
                         
                         let spriteNode = EDDisplayNode(parentTransform: display.transform, texture: texture)
@@ -198,7 +192,21 @@ class EDArmatureNode: SKNode {
                         node.addChild(armatureNode)
                     }
                 }
-                node.reloadDisplayIndex()
+            }
+        }
+        
+        for animation in armature.animation {
+            boneAnimationDictionary[animation.name] = [:]
+            slotAnimationDictionary[animation.name] = [:]
+            for bone in animation.bone {
+                let action = SKAction.boneFrameAction(bone.frame, duration: animation.duration)
+                boneAnimationDictionary[animation.name]![bone.name] = action
+            }
+            
+            for slot in animation.slot {
+                let node = slotDictionary[slot.name]!
+                let action = SKAction.slotFrameAction(slot.frame, node: node, duration: animation.duration)
+                slotAnimationDictionary[animation.name]![slot.name] = action
             }
         }
     }

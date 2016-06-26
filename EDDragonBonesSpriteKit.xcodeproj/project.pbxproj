@@ -11,6 +11,8 @@
 		3952F53A1D1CDB05007242C6 /* injuredfarmer_F.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 3952F5391D1CDB05007242C6 /* injuredfarmer_F.atlas */; };
 		3952F5411D1D22E9007242C6 /* EDArmatureLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3952F53F1D1D22E9007242C6 /* EDArmatureLoader.swift */; };
 		3952F5421D1D22E9007242C6 /* EDSkeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3952F5401D1D22E9007242C6 /* EDSkeleton.swift */; };
+		3954CE8F1D1F668E003A1647 /* class1_earth1.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 3954CE8E1D1F668E003A1647 /* class1_earth1.atlas */; };
+		398508AC1D1F77B400532B7D /* skeleton2.json in Resources */ = {isa = PBXBuildFile; fileRef = 398508AB1D1F77B400532B7D /* skeleton2.json */; };
 		398B227F1D1C22D80007A26C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398B227E1D1C22D80007A26C /* AppDelegate.swift */; };
 		398B22811D1C22D80007A26C /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 398B22801D1C22D80007A26C /* GameScene.sks */; };
 		398B22831D1C22D80007A26C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398B22821D1C22D80007A26C /* GameScene.swift */; };
@@ -18,6 +20,8 @@
 		398B22881D1C22D80007A26C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 398B22861D1C22D80007A26C /* Main.storyboard */; };
 		398B228A1D1C22D80007A26C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 398B22891D1C22D80007A26C /* Assets.xcassets */; };
 		398B228D1D1C22D80007A26C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 398B228B1D1C22D80007A26C /* LaunchScreen.storyboard */; };
+		39AC935E1D1DAC9300C6DDCC /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 398B22A71D1C324A0007A26C /* SwiftyJSON.framework */; };
+		39AC935F1D1DAC9300C6DDCC /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 398B22A71D1C324A0007A26C /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,13 +81,36 @@
 			remoteGlobalIDString = 2E4FEFDA19575BE100351305;
 			remoteInfo = "SwiftyJSON iOS";
 		};
+		39AC93601D1DAC9300C6DDCC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 398B229C1D1C324A0007A26C /* SwiftyJSON.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E4FEFDA19575BE100351305;
+			remoteInfo = "SwiftyJSON iOS";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		39AC93621D1DAC9300C6DDCC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				39AC935F1D1DAC9300C6DDCC /* SwiftyJSON.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3952F4DD1D1CC195007242C6 /* skeleton.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = skeleton.json; sourceTree = "<group>"; };
 		3952F5391D1CDB05007242C6 /* injuredfarmer_F.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = injuredfarmer_F.atlas; sourceTree = "<group>"; };
 		3952F53F1D1D22E9007242C6 /* EDArmatureLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EDArmatureLoader.swift; path = Classes/EDArmatureLoader.swift; sourceTree = "<group>"; };
 		3952F5401D1D22E9007242C6 /* EDSkeleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EDSkeleton.swift; path = Classes/EDSkeleton.swift; sourceTree = "<group>"; };
+		3954CE8E1D1F668E003A1647 /* class1_earth1.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = class1_earth1.atlas; sourceTree = "<group>"; };
+		398508AB1D1F77B400532B7D /* skeleton2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = skeleton2.json; sourceTree = "<group>"; };
 		398B227B1D1C22D80007A26C /* EDDragonBonesSpriteKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EDDragonBonesSpriteKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		398B227E1D1C22D80007A26C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		398B22801D1C22D80007A26C /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -101,6 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39AC935E1D1DAC9300C6DDCC /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,6 +138,7 @@
 		3952F53D1D1D227E007242C6 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				3954CE8E1D1F668E003A1647 /* class1_earth1.atlas */,
 				3952F5391D1CDB05007242C6 /* injuredfarmer_F.atlas */,
 				398B22B61D1C32970007A26C /* injuredfarmer */,
 			);
@@ -177,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				3952F4DD1D1CC195007242C6 /* skeleton.json */,
+				398508AB1D1F77B400532B7D /* skeleton2.json */,
 			);
 			path = injuredfarmer;
 			sourceTree = "<group>";
@@ -191,11 +221,13 @@
 				398B22771D1C22D80007A26C /* Sources */,
 				398B22781D1C22D80007A26C /* Frameworks */,
 				398B22791D1C22D80007A26C /* Resources */,
+				39AC93621D1DAC9300C6DDCC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				398B22B51D1C325F0007A26C /* PBXTargetDependency */,
+				39AC93611D1DAC9300C6DDCC /* PBXTargetDependency */,
 			);
 			name = EDDragonBonesSpriteKit;
 			productName = DragonBonesSpriteKit;
@@ -302,6 +334,8 @@
 				398B228D1D1C22D80007A26C /* LaunchScreen.storyboard in Resources */,
 				398B228A1D1C22D80007A26C /* Assets.xcassets in Resources */,
 				398B22881D1C22D80007A26C /* Main.storyboard in Resources */,
+				3954CE8F1D1F668E003A1647 /* class1_earth1.atlas in Resources */,
+				398508AC1D1F77B400532B7D /* skeleton2.json in Resources */,
 				3952F4DE1D1CC195007242C6 /* skeleton.json in Resources */,
 				3952F53A1D1CDB05007242C6 /* injuredfarmer_F.atlas in Resources */,
 			);
@@ -329,6 +363,11 @@
 			isa = PBXTargetDependency;
 			name = "SwiftyJSON iOS";
 			targetProxy = 398B22B41D1C325F0007A26C /* PBXContainerItemProxy */;
+		};
+		39AC93611D1DAC9300C6DDCC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SwiftyJSON iOS";
+			targetProxy = 39AC93601D1DAC9300C6DDCC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -441,6 +480,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = DragonBonesSpriteKit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.eitdesign.DragonBonesSpriteKit;
@@ -452,6 +492,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = DragonBonesSpriteKit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.eitdesign.DragonBonesSpriteKit;

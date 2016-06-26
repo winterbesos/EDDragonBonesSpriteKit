@@ -12,14 +12,26 @@ class GameScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         
-        let JSONPath = NSBundle.mainBundle().pathForResource("skeleton", ofType: "json")!
-        let atlasName = "injuredfarmer_F"
-        let atlasDictionary = ["injuredfarmer_F": SKTextureAtlas(named: atlasName)]
-        let loader = EDArmatureLoader(filePath: JSONPath, atlasDictionary: atlasDictionary)
+//        let JSONPath = NSBundle.mainBundle().pathForResource("skeleton", ofType: "json")!
+//        let atlasName = "injuredfarmer_F"
+//        let atlasDictionary = [atlasName: SKTextureAtlas(named: atlasName)]
+//        let loader = EDArmatureLoader(filePath: JSONPath, atlasDictionary: atlasDictionary)
+//        
+//        let node = loader.loadNode(withName: "injuredfarmer")
+//        node.playAnimation("idle")
+//        self.addChild(node)
         
-        let node = loader.loadNode(withName: "injuredfarmer")
+//        let texture = SKTexture(imageNamed: "eight_notes_double2_1")
+//        print(texture)
+        
+        
+        let JSONPath = NSBundle.mainBundle().pathForResource("skeleton2", ofType: "json")!
+        let loader = EDArmatureLoader(filePath: JSONPath)
+        let node = loader.loadNode(named: "class1_earth")
         node.playAnimation("idle")
         self.addChild(node)
         
+        
     }
+    
 }
