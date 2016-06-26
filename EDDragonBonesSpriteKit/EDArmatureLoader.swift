@@ -9,11 +9,11 @@
 import SpriteKit
 import SwiftyJSON
 
-class EDArmatureLoader {
+public class EDArmatureLoader {
     
-    var armatureConfig: [String: EDSkeleton.Armature] = [:]
+    private var armatureConfig: [String: EDSkeleton.Armature] = [:]
     
-    init(filePath: String) {
+    public init(filePath: String) {
         
         let JSONData = NSData(contentsOfFile: filePath)!
         let json = JSON(data: JSONData)
@@ -25,7 +25,7 @@ class EDArmatureLoader {
         }
     }
     
-    func loadNode(named name: String) -> EDArmatureNode {
+    public func loadNode(named name: String) -> EDArmatureNode {
         return self.loadRequireArmature(name)
     }
     
@@ -33,50 +33,6 @@ class EDArmatureLoader {
         return EDArmatureNode(armature: armatureConfig[name]!, loader: self)
     }
 
-}
-
-extension SKAction {
-    
-    class func boneFrameAction(frame: [EDSkeleton.Armature.Animation.Bone.Frame], duration: NSTimeInterval) -> SKAction {
-        var sequenceActionArray: [SKAction] = []
-        for theFrame in frame {
-            let duration = theFrame.duration
-            
-            let positionAction = SKAction.moveTo(theFrame.transform.position, duration: duration)
-            let scaleXAction = SKAction.scaleXTo(theFrame.transform.scX, duration: duration)
-            let scaleYAction = SKAction.scaleYTo(theFrame.transform.scY, duration: duration)
-            let zRotationAction = SKAction.rotateToAngle(theFrame.transform.zRotation, duration: duration)
-            let groupAction = SKAction.group([positionAction, scaleXAction, scaleYAction, zRotationAction])
-            sequenceActionArray.append(groupAction)
-        }
-        let sequenceAction = SKAction.sequence(sequenceActionArray)
-        sequenceAction.duration = duration
-        return SKAction.repeatActionForever(sequenceAction)
-    }
-    
-    class func slotFrameAction(frame: [EDSkeleton.Armature.Animation.Slot.Frame], node: EDSlotNode, duration: NSTimeInterval) -> SKAction {
-        var sequenceActionArray: [SKAction] = []
-        
-        for theFrame in frame {
-            var actionArray: [SKAction] = []
-            let displayAction = node.displayAction(theFrame.displayIndex)
-            
-            let duration = theFrame.duration
-            if theFrame.displayIndex != -1 {
-                let alphaAction = SKAction.fadeAlphaTo(theFrame.color.alpha, duration: duration)
-                actionArray.append(alphaAction)
-            } else {
-                actionArray.append(SKAction.waitForDuration(duration))
-            }
-            actionArray.append(displayAction)
-            let groupAction = SKAction.group(actionArray)
-            sequenceActionArray.append(groupAction)
-        }
-        let sequenceAction = SKAction.sequence(sequenceActionArray)
-        sequenceAction.duration = duration
-        return SKAction.repeatActionForever(sequenceAction)
-    }
-    
 }
 
 class EDSlotNode: SKNode {
@@ -134,7 +90,7 @@ class EDDisplayNode: SKSpriteNode {
     
 }
 
-class EDArmatureNode: SKNode {
+public class EDArmatureNode: SKNode {
     
     var parentTransform: EDSkeleton.Armature.Transform?
     
@@ -211,11 +167,11 @@ class EDArmatureNode: SKNode {
         }
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func playAnimation(name: String) {
+    public func playAnimation(name: String) {
         if let animation = self.boneAnimationDictionary[name] {
             for (_, node) in self.boneDictionary {
                 if let action = animation[node.name!] {
@@ -261,3 +217,48 @@ extension SKNode {
     }
     
 }
+
+extension SKAction {
+    
+    class func boneFrameAction(frame: [EDSkeleton.Armature.Animation.Bone.Frame], duration: NSTimeInterval) -> SKAction {
+        var sequenceActionArray: [SKAction] = []
+        for theFrame in frame {
+            let duration = theFrame.duration
+            
+            let positionAction = SKAction.moveTo(theFrame.transform.position, duration: duration)
+            let scaleXAction = SKAction.scaleXTo(theFrame.transform.scX, duration: duration)
+            let scaleYAction = SKAction.scaleYTo(theFrame.transform.scY, duration: duration)
+            let zRotationAction = SKAction.rotateToAngle(theFrame.transform.zRotation, duration: duration)
+            let groupAction = SKAction.group([positionAction, scaleXAction, scaleYAction, zRotationAction])
+            sequenceActionArray.append(groupAction)
+        }
+        let sequenceAction = SKAction.sequence(sequenceActionArray)
+        sequenceAction.duration = duration
+        return SKAction.repeatActionForever(sequenceAction)
+    }
+    
+    class func slotFrameAction(frame: [EDSkeleton.Armature.Animation.Slot.Frame], node: EDSlotNode, duration: NSTimeInterval) -> SKAction {
+        var sequenceActionArray: [SKAction] = []
+        
+        for theFrame in frame {
+            var actionArray: [SKAction] = []
+            let displayAction = node.displayAction(theFrame.displayIndex)
+            
+            let duration = theFrame.duration
+            if theFrame.displayIndex != -1 {
+                let alphaAction = SKAction.fadeAlphaTo(theFrame.color.alpha, duration: duration)
+                actionArray.append(alphaAction)
+            } else {
+                actionArray.append(SKAction.waitForDuration(duration))
+            }
+            actionArray.append(displayAction)
+            let groupAction = SKAction.group(actionArray)
+            sequenceActionArray.append(groupAction)
+        }
+        let sequenceAction = SKAction.sequence(sequenceActionArray)
+        sequenceAction.duration = duration
+        return SKAction.repeatActionForever(sequenceAction)
+    }
+    
+}
+
