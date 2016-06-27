@@ -4,18 +4,25 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3" : 0,
     "E59BB75123E22D1CCA62896D65C8BA76D142F437" : 0,
-    "C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3" : 0
+    "ADF4D79FE7DE30E7CFDDE4AFE44B644EAE16351D" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B10CE01C-942F-4132-BC31-3A3ECC408032",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3" : "DragonBonesSpriteKit\/SwiftyJSON\/",
     "E59BB75123E22D1CCA62896D65C8BA76D142F437" : "DragonBonesSpriteKit\/",
-    "C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3" : "DragonBonesSpriteKit\/SwiftyJSON\/"
+    "ADF4D79FE7DE30E7CFDDE4AFE44B644EAE16351D" : "HappyBall\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "EDDragonBonesSpriteKit",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "EDDragonBonesSpriteKit.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "salo.so:\/alidata\/git\/iOS_Mac\/HappyBall.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "ADF4D79FE7DE30E7CFDDE4AFE44B644EAE16351D"
+    },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/SwiftyJSON\/SwiftyJSON.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",

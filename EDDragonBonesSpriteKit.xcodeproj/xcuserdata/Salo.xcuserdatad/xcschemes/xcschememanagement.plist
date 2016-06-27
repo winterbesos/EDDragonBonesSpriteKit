@@ -9,10 +9,20 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>EDDragonBonesSpriteKit.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>398B227A1D1C22D80007A26C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>39F45FA11D1FFF7300E1F2C2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
