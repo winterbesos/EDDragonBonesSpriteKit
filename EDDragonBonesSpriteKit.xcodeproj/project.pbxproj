@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		392B77951D20002C00BF83C3 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 398B22A71D1C324A0007A26C /* SwiftyJSON.framework */; };
-		39DE3C541D2005EE0060A993 /* EDDragonBonesSpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39F45FA21D1FFF7300E1F2C2 /* EDDragonBonesSpriteKit.framework */; };
 		39DE3C571D2009FD0060A993 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 398B22A71D1C324A0007A26C /* SwiftyJSON.framework */; };
-		39DE3C5A1D200C450060A993 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 398B22A71D1C324A0007A26C /* SwiftyJSON.framework */; };
 		39DE3C5B1D200C450060A993 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 398B22A71D1C324A0007A26C /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		39DE3C5E1D200C450060A993 /* EDDragonBonesSpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39F45FA21D1FFF7300E1F2C2 /* EDDragonBonesSpriteKit.framework */; };
 		39DE3C5F1D200C450060A993 /* EDDragonBonesSpriteKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 39F45FA21D1FFF7300E1F2C2 /* EDDragonBonesSpriteKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -156,8 +154,6 @@
 			files = (
 				39DE3C5E1D200C450060A993 /* EDDragonBonesSpriteKit.framework in Frameworks */,
 				39DE3C571D2009FD0060A993 /* SwiftyJSON.framework in Frameworks */,
-				39DE3C541D2005EE0060A993 /* EDDragonBonesSpriteKit.framework in Frameworks */,
-				39DE3C5A1D200C450060A993 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
