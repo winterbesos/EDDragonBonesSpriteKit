@@ -31,6 +31,8 @@
 		39DE3C951D200EBB0060A993 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39DE3C921D200EBB0060A993 /* Main.storyboard */; };
 		39DE3C971D2010950060A993 /* injuredfarmer_F.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 39DE3C961D2010950060A993 /* injuredfarmer_F.atlas */; };
 		39F45FA51D1FFF7300E1F2C2 /* EDDragonBonesSpriteKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F45FA41D1FFF7300E1F2C2 /* EDDragonBonesSpriteKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		39F89F6B1D22D13D000598B1 /* monkey.json in Resources */ = {isa = PBXBuildFile; fileRef = 39F89F6A1D22D13D000598B1 /* monkey.json */; };
+		39F89F711D22D16E000598B1 /* monkey.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 39F89F701D22D16E000598B1 /* monkey.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +145,8 @@
 		39F45FA21D1FFF7300E1F2C2 /* EDDragonBonesSpriteKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EDDragonBonesSpriteKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		39F45FA41D1FFF7300E1F2C2 /* EDDragonBonesSpriteKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EDDragonBonesSpriteKit.h; sourceTree = "<group>"; };
 		39F45FA61D1FFF7300E1F2C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		39F89F6A1D22D13D000598B1 /* monkey.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = monkey.json; sourceTree = "<group>"; };
+		39F89F701D22D16E000598B1 /* monkey.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = monkey.atlas; path = DragonBonesSpriteKitDemo/monkey.atlas; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +213,7 @@
 				39DE3C921D200EBB0060A993 /* Main.storyboard */,
 				39DE3C841D200E990060A993 /* injuredfarmer */,
 				39DE3C761D200E810060A993 /* Base.lproj */,
+				39F89F701D22D16E000598B1 /* monkey.atlas */,
 				39DE3C7B1D200E820060A993 /* class1_earth1.atlas */,
 				39DE3C961D2010950060A993 /* injuredfarmer_F.atlas */,
 				39DE3C6F1D200E760060A993 /* Info.plist */,
@@ -244,6 +249,7 @@
 		39DE3C841D200E990060A993 /* injuredfarmer */ = {
 			isa = PBXGroup;
 			children = (
+				39F89F6A1D22D13D000598B1 /* monkey.json */,
 				39DE3C851D200E990060A993 /* skeleton.json */,
 				39DE3C861D200E990060A993 /* skeleton2.json */,
 			);
@@ -416,10 +422,12 @@
 			files = (
 				39DE3C881D200E990060A993 /* skeleton2.json in Resources */,
 				39DE3C941D200EBB0060A993 /* LaunchScreen.storyboard in Resources */,
+				39F89F711D22D16E000598B1 /* monkey.atlas in Resources */,
 				39DE3C7E1D200E820060A993 /* Main.storyboard in Resources */,
 				39DE3C811D200E870060A993 /* GameScene.sks in Resources */,
 				39DE3C871D200E990060A993 /* skeleton.json in Resources */,
 				39DE3C971D2010950060A993 /* injuredfarmer_F.atlas in Resources */,
+				39F89F6B1D22D13D000598B1 /* monkey.json in Resources */,
 				39DE3C7F1D200E820060A993 /* class1_earth1.atlas in Resources */,
 				39DE3C951D200EBB0060A993 /* Main.storyboard in Resources */,
 				39DE3C7C1D200E820060A993 /* Assets.xcassets in Resources */,
