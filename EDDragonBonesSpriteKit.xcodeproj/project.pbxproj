@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		392B77951D20002C00BF83C3 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 398B22A71D1C324A0007A26C /* SwiftyJSON.framework */; };
+		39BA19751D23FF0100339330 /* bird.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 39BA19741D23FF0100339330 /* bird.atlas */; };
+		39BA197D1D23FF0900339330 /* bird_2.json in Resources */ = {isa = PBXBuildFile; fileRef = 39BA197C1D23FF0900339330 /* bird_2.json */; };
+		39BA197F1D24074D00339330 /* sound_bird_2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 39BA197E1D24074D00339330 /* sound_bird_2.wav */; };
 		39DE3C571D2009FD0060A993 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 398B22A71D1C324A0007A26C /* SwiftyJSON.framework */; };
 		39DE3C5B1D200C450060A993 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 398B22A71D1C324A0007A26C /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		39DE3C5E1D200C450060A993 /* EDDragonBonesSpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39F45FA21D1FFF7300E1F2C2 /* EDDragonBonesSpriteKit.framework */; };
@@ -122,6 +125,9 @@
 /* Begin PBXFileReference section */
 		398B227B1D1C22D80007A26C /* EDDragonBonesSpriteKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EDDragonBonesSpriteKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		398B229C1D1C324A0007A26C /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
+		39BA19741D23FF0100339330 /* bird.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = bird.atlas; sourceTree = SOURCE_ROOT; };
+		39BA197C1D23FF0900339330 /* bird_2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bird_2.json; sourceTree = "<group>"; };
+		39BA197E1D24074D00339330 /* sound_bird_2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sound_bird_2.wav; sourceTree = SOURCE_ROOT; };
 		39DE3C671D200E3D0060A993 /* EDArmatureLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EDArmatureLoader.swift; path = EDDragonBonesSpriteKit/EDArmatureLoader.swift; sourceTree = SOURCE_ROOT; };
 		39DE3C681D200E3D0060A993 /* EDSkeleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EDSkeleton.swift; path = EDDragonBonesSpriteKit/EDSkeleton.swift; sourceTree = SOURCE_ROOT; };
 		39DE3C6B1D200E760060A993 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = DragonBonesSpriteKitDemo/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
@@ -226,8 +232,10 @@
 		398C4A7A1D23702F00E42FBB /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				39BA197E1D24074D00339330 /* sound_bird_2.wav */,
 				39DE3C751D200E810060A993 /* Assets.xcassets */,
 				39DE3C841D200E990060A993 /* skeleton */,
+				39BA19741D23FF0100339330 /* bird.atlas */,
 				39F89F701D22D16E000598B1 /* monkey.atlas */,
 				39DE3C7B1D200E820060A993 /* class1_earth1.atlas */,
 				39DE3C961D2010950060A993 /* injuredfarmer_F.atlas */,
@@ -241,6 +249,7 @@
 				39F89F6A1D22D13D000598B1 /* monkey.json */,
 				39DE3C851D200E990060A993 /* skeleton.json */,
 				39DE3C861D200E990060A993 /* skeleton2.json */,
+				39BA197C1D23FF0900339330 /* bird_2.json */,
 			);
 			name = skeleton;
 			path = DragonBonesSpriteKitDemo/injuredfarmer;
@@ -413,10 +422,13 @@
 				39DE3C941D200EBB0060A993 /* LaunchScreen.storyboard in Resources */,
 				39F89F711D22D16E000598B1 /* monkey.atlas in Resources */,
 				39DE3C811D200E870060A993 /* GameScene.sks in Resources */,
+				39BA197F1D24074D00339330 /* sound_bird_2.wav in Resources */,
 				39DE3C871D200E990060A993 /* skeleton.json in Resources */,
 				39DE3C971D2010950060A993 /* injuredfarmer_F.atlas in Resources */,
 				39F89F6B1D22D13D000598B1 /* monkey.json in Resources */,
+				39BA19751D23FF0100339330 /* bird.atlas in Resources */,
 				39DE3C7F1D200E820060A993 /* class1_earth1.atlas in Resources */,
+				39BA197D1D23FF0900339330 /* bird_2.json in Resources */,
 				39DE3C951D200EBB0060A993 /* Main.storyboard in Resources */,
 				39DE3C7C1D200E820060A993 /* Assets.xcassets in Resources */,
 			);

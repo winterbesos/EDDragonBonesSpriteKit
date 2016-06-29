@@ -67,6 +67,7 @@ public class EDArmatureNode: SKNode {
     
     private var boneAnimationDictionary: [String: [String: SKAction]] = [:]
     private var slotAnimationDictionary: [String: [String: SKAction]] = [:]
+    private var frameAnimationDictionary: [String: SKAction] = [:]
     private var boneDictionary: [String: SKNode] = [:]
     private var slotDictionary: [String: EDSlotNode] = [:]
     private var childArmatureNodes: [EDArmatureNode] = []
@@ -130,6 +131,7 @@ public class EDArmatureNode: SKNode {
         for animation in armature.animation {
             boneAnimationDictionary[animation.name] = [:]
             slotAnimationDictionary[animation.name] = [:]
+        
             for bone in animation.bone {
                 let action = SKAction.boneFrameAction(bone.frame, duration: animation.duration)
                 boneAnimationDictionary[animation.name]![bone.name] = action
@@ -139,14 +141,74 @@ public class EDArmatureNode: SKNode {
                 let action = SKAction.slotFrameAction(slot.frame, duration: animation.duration)
                 slotAnimationDictionary[animation.name]![slot.name] = action
             }
+            
+            var frameActionArray: [SKAction] = []
+            for frame in animation.frame {
+                frameActionArray.append(SKAction.waitForDuration(frame.duration))
+                if let event = frame.event {
+                    frameActionArray.append(SKAction.playSoundFileNamed(event, waitForCompletion: false))
+                }
+            }
+            frameAnimationDictionary[animation.name] = SKAction.sequence(frameActionArray)
         }
+        
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func stopAllAction() {
+        
+        for (_, node) in self.boneDictionary {
+            node.removeAllActions()
+        }
+    
+        for (_, node) in self.slotDictionary {
+            node.removeAllActions()
+        }
+        
+        self.removeAllActions()
+        
+        for armatureNode in self.childArmatureNodes {
+            armatureNode.stopAllAction()
+        }
+        
+    }
+    
+    public func repeatAnimation(name: String) {
+        
+        self.stopAllAction()
+        
+        if let animation = self.boneAnimationDictionary[name] {
+            for (_, node) in self.boneDictionary {
+                if let action = animation[node.name!] {
+                    node.runAction(SKAction.repeatActionForever(action))
+                }
+            }
+        }
+        
+        if let animation = self.slotAnimationDictionary[name] {
+            for (_, node) in self.slotDictionary {
+                if let action = animation[node.name!] {
+                    node.runAction(SKAction.repeatActionForever(action))
+                }
+            }
+        }
+        
+        if let action = self.frameAnimationDictionary[name] {
+            self.runAction(SKAction.repeatActionForever(action))
+        }
+        
+        for armatureNode in self.childArmatureNodes {
+            armatureNode.repeatAnimation(name)
+        }
+    }
+    
     public func playAnimation(name: String) {
+        
+        self.stopAllAction()
+        
         if let animation = self.boneAnimationDictionary[name] {
             for (_, node) in self.boneDictionary {
                 if let action = animation[node.name!] {
@@ -161,6 +223,10 @@ public class EDArmatureNode: SKNode {
                     node.runAction(action)
                 }
             }
+        }
+        
+        if let eventAction = self.frameAnimationDictionary[name] {
+            self.runAction(eventAction)
         }
         
         for armatureNode in self.childArmatureNodes {
@@ -225,7 +291,7 @@ extension SKAction {
         }
         let sequenceAction = SKAction.sequence(sequenceActionArray)
         sequenceAction.duration = duration
-        return SKAction.repeatActionForever(sequenceAction)
+        return sequenceAction
     }
     
     class func slotFrameAction(frame: [EDSkeleton.Armature.Animation.Slot.Frame], duration: NSTimeInterval) -> SKAction {
@@ -253,7 +319,7 @@ extension SKAction {
         }
         let sequenceAction = SKAction.sequence(sequenceActionArray)
         sequenceAction.duration = duration
-        return SKAction.repeatActionForever(sequenceAction)
+        return sequenceAction
     }
     
 }

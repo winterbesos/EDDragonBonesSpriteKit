@@ -236,6 +236,12 @@ struct EDSkeleton {
                 
             }
             
+            struct Frame {
+                let tweenEasing: Bool
+                let event: String?
+                let duration: NSTimeInterval
+            }
+            
             struct FFD {
                 
             }
@@ -245,15 +251,15 @@ struct EDSkeleton {
             let bone: [Bone]
             let duration: NSTimeInterval
             let name: String
+            let frame: [Frame]
             
             // todo:
-            var frame: [AnyObject]? // todo
             var ffd: [FFD]?
             
             init(json: JSON, boneTransforms: [String: Transform], frameRate: Int) {
                 name = json["name"].string!
                 playTimes = json["playTimes"].int
-                duration = 1.0 / Double(frameRate) * Double(json["duration"].int!)
+                duration = 1.0 / NSTimeInterval(frameRate) * Double(json["duration"].int!)
                 var theSlot: [Slot] = []
                 for item in json["slot"].array ?? [] {
                     theSlot.append(Slot(json: item, frameRate: frameRate))
@@ -265,6 +271,46 @@ struct EDSkeleton {
                     theBone.append(Bone(json: item, boneTransforms: boneTransforms, frameRate: frameRate))
                 }
                 bone = theBone
+                
+                var theFrame: [Frame] = []
+                var lastItem: JSON?
+                let frameJSON = json["frame"].array ?? []
+                
+                var cDuration: NSTimeInterval = 0
+                for item in frameJSON {
+                    
+                    let duration: NSTimeInterval
+                    let tweenEasing: Bool
+                    let event: String? = item["event"].string
+                    
+                    if let lastItem = lastItem {
+                        duration = 1.0 / NSTimeInterval(frameRate) * NSTimeInterval(lastItem["duration"].int!)
+                        tweenEasing = (lastItem["tweenEasing"].int != nil)  // if not int is no
+                    } else {
+                        tweenEasing = false
+                        duration = 0
+                    }
+                    
+                    let frame = Frame(tweenEasing: tweenEasing,
+                                      event: event,
+                                      duration: duration)
+                    theFrame.append(frame)
+                    
+                    cDuration += duration
+                    lastItem = item
+                }
+                
+                // supplyment last frame
+                if frameJSON.count != 0 {
+                    if cDuration < duration {
+                        let frame = Frame(tweenEasing: false,
+                                          event: nil,
+                                          duration: duration - cDuration)
+                        theFrame.append(frame)
+                    }
+                }
+                
+                frame = theFrame
             }
         }
         
