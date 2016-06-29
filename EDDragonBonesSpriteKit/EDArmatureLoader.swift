@@ -203,7 +203,7 @@ extension SKAction {
         var sequenceActionArray: [SKAction] = []
         for theFrame in frame {
             let frameDuration = theFrame.duration
-            if let _ = theFrame.tweenEasing { // todo: tweeneasing usage
+            if theFrame.tweenEasing {
                 let positionAction = SKAction.moveTo(theFrame.transform.position, duration: frameDuration)
                 let scaleXAction = SKAction.scaleXTo(theFrame.transform.scX, duration: frameDuration)
                 let scaleYAction = SKAction.scaleYTo(theFrame.transform.scY, duration: frameDuration)
@@ -235,7 +235,7 @@ extension SKAction {
             let frameAction: SKAction
             
             let duration = theFrame.duration
-            if let _ = theFrame.tweenEasing { // todo: tweeneasing usage
+            if theFrame.tweenEasing {
                 frameAction = SKAction.fadeAlphaTo(theFrame.color.alpha, duration: duration)
             } else {
                 frameAction = SKAction.waitForDuration(duration)
