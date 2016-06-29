@@ -2,4 +2,23 @@
 <Bucket
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            condition = "slot.name == &quot;eyes-closed&quot; &amp;&amp; animation.name == &quot;idle&quot;"
+            continueAfterRunningActions = "No"
+            filePath = "EDDragonBonesSpriteKit/EDArmatureLoader.swift"
+            timestampString = "488858959.010756"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "init(armature:loader:transform:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

@@ -37,21 +37,6 @@ public class EDArmatureLoader {
 
 class EDSlotNode: SKNode {
     
-    func displayAction(index: Int) -> SKAction {
-        var actionArray: [SKAction] = []
-        for idx in 0 ..< self.children.count {
-            let isCurrent = (idx == index)
-            let node = self.children[idx]
-        
-            let displayAction = SKAction.runBlock({
-                node.hidden = !isCurrent
-            })
-            actionArray.append(displayAction)
-        }
-        
-        return SKAction.group(actionArray)
-    }
-    
     init(slot: EDSkeleton.Armature.Slot) {
         super.init()
         
@@ -148,8 +133,7 @@ public class EDArmatureNode: SKNode {
             }
             
             for slot in animation.slot {
-                let node = slotDictionary[slot.name]!
-                let action = SKAction.slotFrameAction(slot.frame, node: node, duration: animation.duration)
+                let action = SKAction.slotFrameAction(slot.frame, duration: animation.duration)
                 slotAnimationDictionary[animation.name]![slot.name] = action
             }
         }
@@ -211,37 +195,54 @@ extension SKAction {
     class func boneFrameAction(frame: [EDSkeleton.Armature.Animation.Bone.Frame], duration: NSTimeInterval) -> SKAction {
         var sequenceActionArray: [SKAction] = []
         for theFrame in frame {
-            let duration = theFrame.duration
+            let frameDuration = theFrame.duration
+            if let _ = theFrame.tweenEasing { // todo: tweeneasing usage
+                let positionAction = SKAction.moveTo(theFrame.transform.position, duration: frameDuration)
+                let scaleXAction = SKAction.scaleXTo(theFrame.transform.scX, duration: frameDuration)
+                let scaleYAction = SKAction.scaleYTo(theFrame.transform.scY, duration: frameDuration)
+                let zRotationAction = SKAction.rotateToAngle(theFrame.transform.zRotation, duration: frameDuration)
+                let groupAction = SKAction.group([positionAction, scaleXAction, scaleYAction, zRotationAction])
+                sequenceActionArray.append(groupAction)
+            } else {
+                let sequenceAction = SKAction.sequence(
+                    [
+                    SKAction.waitForDuration(frameDuration),
+                    SKAction.customActionWithDuration(0, actionBlock: {
+                        (node: SKNode, elapsedTime: CGFloat) in
+                        node.transform = theFrame.transform
+                    })
+                    ])
+                sequenceActionArray.append(sequenceAction)
+            }
             
-            let positionAction = SKAction.moveTo(theFrame.transform.position, duration: duration)
-            let scaleXAction = SKAction.scaleXTo(theFrame.transform.scX, duration: duration)
-            let scaleYAction = SKAction.scaleYTo(theFrame.transform.scY, duration: duration)
-            let zRotationAction = SKAction.rotateToAngle(theFrame.transform.zRotation, duration: duration)
-            let groupAction = SKAction.group([positionAction, scaleXAction, scaleYAction, zRotationAction])
-            sequenceActionArray.append(groupAction)
         }
         let sequenceAction = SKAction.sequence(sequenceActionArray)
         sequenceAction.duration = duration
         return SKAction.repeatActionForever(sequenceAction)
     }
     
-    class func slotFrameAction(frame: [EDSkeleton.Armature.Animation.Slot.Frame], node: EDSlotNode, duration: NSTimeInterval) -> SKAction {
+    class func slotFrameAction(frame: [EDSkeleton.Armature.Animation.Slot.Frame], duration: NSTimeInterval) -> SKAction {
         var sequenceActionArray: [SKAction] = []
         
         for theFrame in frame {
-            var actionArray: [SKAction] = []
-            let displayAction = node.displayAction(theFrame.displayIndex)
+            let frameAction: SKAction
             
             let duration = theFrame.duration
-            if theFrame.displayIndex != -1 {
-                let alphaAction = SKAction.fadeAlphaTo(theFrame.color.alpha, duration: duration)
-                actionArray.append(alphaAction)
+            if let _ = theFrame.tweenEasing { // todo: tweeneasing usage
+                frameAction = SKAction.fadeAlphaTo(theFrame.color.alpha, duration: duration)
             } else {
-                actionArray.append(SKAction.waitForDuration(duration))
+                frameAction = SKAction.waitForDuration(duration)
             }
-            actionArray.append(displayAction)
-            let groupAction = SKAction.group(actionArray)
-            sequenceActionArray.append(groupAction)
+            
+            let displayAction = SKAction.customActionWithDuration(0, actionBlock: {
+                (node: SKNode, elapsedTime: CGFloat) in
+                for idx in 0 ..< node.children.count {
+                    node.children[idx].hidden = (idx != theFrame.displayIndex)
+                }
+            })
+            let subSeq = SKAction.sequence([frameAction, displayAction])
+
+            sequenceActionArray.append(subSeq)
         }
         let sequenceAction = SKAction.sequence(sequenceActionArray)
         sequenceAction.duration = duration
