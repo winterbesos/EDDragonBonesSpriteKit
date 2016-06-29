@@ -44,16 +44,6 @@ class EDSlotNode: SKNode {
             let node = self.children[idx]
         
             let displayAction = SKAction.runBlock({
-                if isCurrent {
-                    switch node {
-                    case let n as EDArmatureNode:
-                        self.transform = n.parentTransform!
-                    case let n as EDDisplayNode:
-                        self.transform = n.parentTransform
-                    default:()
-                    }
-                }
-                
                 node.hidden = !isCurrent
             })
             actionArray.append(displayAction)
@@ -77,11 +67,9 @@ class EDSlotNode: SKNode {
 
 class EDDisplayNode: SKSpriteNode {
     
-    var parentTransform: EDSkeleton.Armature.Transform
-    
-    init(parentTransform: EDSkeleton.Armature.Transform, texture: SKTexture) {
-        self.parentTransform = parentTransform
+    init(transform: EDSkeleton.Armature.Transform, texture: SKTexture) {
         super.init(texture: texture, color: UIColor.clearColor(), size: texture.size())
+        self.transform = transform
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -92,18 +80,18 @@ class EDDisplayNode: SKSpriteNode {
 
 public class EDArmatureNode: SKNode {
     
-    var parentTransform: EDSkeleton.Armature.Transform?
-    
     private var boneAnimationDictionary: [String: [String: SKAction]] = [:]
     private var slotAnimationDictionary: [String: [String: SKAction]] = [:]
     private var boneDictionary: [String: SKNode] = [:]
     private var slotDictionary: [String: EDSlotNode] = [:]
     
-    init(armature: EDSkeleton.Armature, loader: EDArmatureLoader, parentTransform: EDSkeleton.Armature.Transform? = nil) {
-        
-        self.parentTransform = parentTransform
+    init(armature: EDSkeleton.Armature, loader: EDArmatureLoader, transform: EDSkeleton.Armature.Transform? = nil) {
         
         super.init()
+        
+        if let transform = transform {
+            self.transform = transform
+        }
         
         self.name = armature.name
         
@@ -140,11 +128,11 @@ public class EDArmatureNode: SKNode {
                         let atlas = SKTextureAtlas(named: atlasName)
                         let texture = atlas.textureNamed(textureName)
                         
-                        let spriteNode = EDDisplayNode(parentTransform: display.transform, texture: texture)
+                        let spriteNode = EDDisplayNode(transform: display.transform, texture: texture)
                         node.addChild(spriteNode)
                     case .armature:
                         let armatureNode = loader.loadRequireArmature(display.name)
-                        armatureNode.parentTransform = display.transform
+                        armatureNode.transform = display.transform
                         node.addChild(armatureNode)
                     }
                 }
@@ -203,9 +191,9 @@ extension SKNode {
         
         get {
             return EDSkeleton.Armature.Transform(scX: self.xScale,
-                                               scY: self.yScale,
-                                               zRotation: self.zRotation,
-                                               position: self.position)
+                                                 scY: self.yScale,
+                                                 zRotation: self.zRotation,
+                                                 position: self.position)
         }
     }
     
