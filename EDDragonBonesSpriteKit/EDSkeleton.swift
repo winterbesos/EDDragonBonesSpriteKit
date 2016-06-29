@@ -129,7 +129,7 @@ struct EDSkeleton {
                     struct Color {
                         let alpha: CGFloat
                         init(json: JSON) {
-                            alpha = CGFloat(json["aM"].int ?? 1)
+                            alpha = CGFloat(json["aM"].int ?? 100) / 100
                         }
                     }
                     
@@ -149,13 +149,15 @@ struct EDSkeleton {
                     var lastItem: JSON?
                     let frameJSON = json["frame"].array ?? []
                     for item in frameJSON {
-                        let tweenEasing = item["tweenEasing"].int
                         let color = Frame.Color(json: item["color"])
                         let duration: NSTimeInterval
+                        let tweenEasing: Int?
                         if let lastItem = lastItem {
                             duration = 1.0 / NSTimeInterval(frameRate) * NSTimeInterval(lastItem["duration"].int!)
+                            tweenEasing = lastItem["tweenEasing"].int
                         } else {
                             duration = 0
+                            tweenEasing = nil
                         }
                         
                         let frame = Frame(tweenEasing: tweenEasing,
@@ -170,9 +172,10 @@ struct EDSkeleton {
                     // supplyment last frame
                     let lastDuration = frameJSON.last!["duration"].int!
                     if lastDuration != 0 {
+                        let firstFrame = theFrame.first!
                         let frame = Frame(tweenEasing: nil,
-                                          color: theFrame.first!.color,
-                                          displayIndex: theFrame.first!.displayIndex,
+                                          color: firstFrame.color,
+                                          displayIndex: firstFrame.displayIndex,
                                           duration: 1.0 / NSTimeInterval(frameRate) * NSTimeInterval(lastDuration))
                         theFrame.append(frame)
                     }
@@ -199,13 +202,15 @@ struct EDSkeleton {
                     let frameJSON = json["frame"].array ?? []
                     
                     for item in frameJSON {
-                        let tweenEasing = item["tweenEasing"].int
                         let transform = Transform(json: item["transform"], defaultTransform: boneTransforms[name]!)
                         let duration: NSTimeInterval
+                        let tweenEasing: Int?
                         
                         if let lastItem = lastItem {
                             duration = 1.0 / NSTimeInterval(frameRate) * NSTimeInterval(lastItem["duration"].int!)
+                            tweenEasing = lastItem["tweenEasing"].int
                         } else {
+                            tweenEasing = nil
                             duration = 0
                         }
                         

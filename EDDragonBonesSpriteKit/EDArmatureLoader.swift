@@ -69,6 +69,7 @@ public class EDArmatureNode: SKNode {
     private var slotAnimationDictionary: [String: [String: SKAction]] = [:]
     private var boneDictionary: [String: SKNode] = [:]
     private var slotDictionary: [String: EDSlotNode] = [:]
+    private var childArmatureNodes: [EDArmatureNode] = []
     
     init(armature: EDSkeleton.Armature, loader: EDArmatureLoader, transform: EDSkeleton.Armature.Transform? = nil) {
         
@@ -119,6 +120,8 @@ public class EDArmatureNode: SKNode {
                         let armatureNode = loader.loadRequireArmature(display.name)
                         armatureNode.transform = display.transform
                         node.addChild(armatureNode)
+                        
+                        self.childArmatureNodes.append(armatureNode)
                     }
                 }
             }
@@ -158,6 +161,10 @@ public class EDArmatureNode: SKNode {
                     node.runAction(action)
                 }
             }
+        }
+        
+        for armatureNode in self.childArmatureNodes {
+            armatureNode.playAnimation(name)
         }
     }
     

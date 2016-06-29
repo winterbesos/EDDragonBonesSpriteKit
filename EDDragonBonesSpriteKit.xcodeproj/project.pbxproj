@@ -16,8 +16,6 @@
 		39DE3C6A1D200E3D0060A993 /* EDSkeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DE3C681D200E3D0060A993 /* EDSkeleton.swift */; };
 		39DE3C741D200E760060A993 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39DE3C6F1D200E760060A993 /* Info.plist */; };
 		39DE3C7C1D200E820060A993 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39DE3C751D200E810060A993 /* Assets.xcassets */; };
-		39DE3C7D1D200E820060A993 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39DE3C771D200E820060A993 /* LaunchScreen.storyboard */; };
-		39DE3C7E1D200E820060A993 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39DE3C791D200E820060A993 /* Main.storyboard */; };
 		39DE3C7F1D200E820060A993 /* class1_earth1.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 39DE3C7B1D200E820060A993 /* class1_earth1.atlas */; };
 		39DE3C801D200E870060A993 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DE3C6B1D200E760060A993 /* AppDelegate.swift */; };
 		39DE3C811D200E870060A993 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 39DE3C6C1D200E760060A993 /* GameScene.sks */; };
@@ -132,8 +130,6 @@
 		39DE3C6E1D200E760060A993 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameViewController.swift; path = DragonBonesSpriteKitDemo/GameViewController.swift; sourceTree = SOURCE_ROOT; };
 		39DE3C6F1D200E760060A993 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = DragonBonesSpriteKitDemo/Info.plist; sourceTree = SOURCE_ROOT; };
 		39DE3C751D200E810060A993 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = DragonBonesSpriteKitDemo/Assets.xcassets; sourceTree = SOURCE_ROOT; };
-		39DE3C781D200E820060A993 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		39DE3C7A1D200E820060A993 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
 		39DE3C7B1D200E820060A993 /* class1_earth1.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = class1_earth1.atlas; path = DragonBonesSpriteKitDemo/class1_earth1.atlas; sourceTree = SOURCE_ROOT; };
 		39DE3C851D200E990060A993 /* skeleton.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = skeleton.json; sourceTree = "<group>"; };
 		39DE3C861D200E990060A993 /* skeleton2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = skeleton2.json; sourceTree = "<group>"; };
@@ -204,14 +200,9 @@
 				39DE3C6C1D200E760060A993 /* GameScene.sks */,
 				39DE3C6D1D200E760060A993 /* GameScene.swift */,
 				39DE3C6E1D200E760060A993 /* GameViewController.swift */,
-				39DE3C751D200E810060A993 /* Assets.xcassets */,
 				39DE3C901D200EBB0060A993 /* LaunchScreen.storyboard */,
 				39DE3C921D200EBB0060A993 /* Main.storyboard */,
-				39DE3C841D200E990060A993 /* injuredfarmer */,
-				39DE3C761D200E810060A993 /* Base.lproj */,
-				39F89F701D22D16E000598B1 /* monkey.atlas */,
-				39DE3C7B1D200E820060A993 /* class1_earth1.atlas */,
-				39DE3C961D2010950060A993 /* injuredfarmer_F.atlas */,
+				398C4A7A1D23702F00E42FBB /* Resource */,
 				39DE3C6F1D200E760060A993 /* Info.plist */,
 			);
 			name = DragonBonesSpriteKitDemo;
@@ -232,24 +223,26 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		39DE3C761D200E810060A993 /* Base.lproj */ = {
+		398C4A7A1D23702F00E42FBB /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				39DE3C771D200E820060A993 /* LaunchScreen.storyboard */,
-				39DE3C791D200E820060A993 /* Main.storyboard */,
+				39DE3C751D200E810060A993 /* Assets.xcassets */,
+				39DE3C841D200E990060A993 /* skeleton */,
+				39F89F701D22D16E000598B1 /* monkey.atlas */,
+				39DE3C7B1D200E820060A993 /* class1_earth1.atlas */,
+				39DE3C961D2010950060A993 /* injuredfarmer_F.atlas */,
 			);
-			name = Base.lproj;
-			path = DragonBonesSpriteKitDemo/Base.lproj;
-			sourceTree = SOURCE_ROOT;
+			name = Resource;
+			sourceTree = "<group>";
 		};
-		39DE3C841D200E990060A993 /* injuredfarmer */ = {
+		39DE3C841D200E990060A993 /* skeleton */ = {
 			isa = PBXGroup;
 			children = (
 				39F89F6A1D22D13D000598B1 /* monkey.json */,
 				39DE3C851D200E990060A993 /* skeleton.json */,
 				39DE3C861D200E990060A993 /* skeleton2.json */,
 			);
-			name = injuredfarmer;
+			name = skeleton;
 			path = DragonBonesSpriteKitDemo/injuredfarmer;
 			sourceTree = SOURCE_ROOT;
 		};
@@ -419,7 +412,6 @@
 				39DE3C881D200E990060A993 /* skeleton2.json in Resources */,
 				39DE3C941D200EBB0060A993 /* LaunchScreen.storyboard in Resources */,
 				39F89F711D22D16E000598B1 /* monkey.atlas in Resources */,
-				39DE3C7E1D200E820060A993 /* Main.storyboard in Resources */,
 				39DE3C811D200E870060A993 /* GameScene.sks in Resources */,
 				39DE3C871D200E990060A993 /* skeleton.json in Resources */,
 				39DE3C971D2010950060A993 /* injuredfarmer_F.atlas in Resources */,
@@ -427,7 +419,6 @@
 				39DE3C7F1D200E820060A993 /* class1_earth1.atlas in Resources */,
 				39DE3C951D200EBB0060A993 /* Main.storyboard in Resources */,
 				39DE3C7C1D200E820060A993 /* Assets.xcassets in Resources */,
-				39DE3C7D1D200E820060A993 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,22 +473,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		39DE3C771D200E820060A993 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				39DE3C781D200E820060A993 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		39DE3C791D200E820060A993 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				39DE3C7A1D200E820060A993 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		39DE3C901D200EBB0060A993 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
