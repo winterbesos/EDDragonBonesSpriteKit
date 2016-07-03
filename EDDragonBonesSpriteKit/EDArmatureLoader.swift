@@ -41,7 +41,7 @@ class EDSlotNode: SKNode {
         super.init()
         
         self.name = slot.name
-        self.zPosition = CGFloat(slot.z)
+        self.zPosition = CGFloat(slot.z) / 100.0
     }
     
     required init?(coder aDecoder: NSCoder) {
