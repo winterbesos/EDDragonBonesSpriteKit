@@ -37,7 +37,11 @@ class GameScene: SKScene {
         let JSONPath4 = NSBundle.mainBundle().pathForResource("bird_2", ofType: "json")!
         let loader4 = EDArmatureLoader(filePath: JSONPath4)
         let node4 = loader4.loadNode(named: "bird_2")
-        node4.repeatAnimation("idle")
+        node4.playAnimation("touch") { () in
+            print("node4 touch animation completed")
+            
+            node4.repeatAnimation("idle")
+        }
         node4.position = CGPoint(x: 300, y: -200)
         self.addChild(node4)
         

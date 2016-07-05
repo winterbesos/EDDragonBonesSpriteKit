@@ -131,7 +131,7 @@ public class EDArmatureNode: SKNode {
         for animation in armature.animation {
             boneAnimationDictionary[animation.name] = [:]
             slotAnimationDictionary[animation.name] = [:]
-        
+            
             for bone in animation.bone {
                 let action = SKAction.boneFrameAction(bone.frame, duration: animation.duration)
                 boneAnimationDictionary[animation.name]![bone.name] = action
@@ -149,6 +149,7 @@ public class EDArmatureNode: SKNode {
                     frameActionArray.append(SKAction.playSoundFileNamed(event, waitForCompletion: false))
                 }
             }
+            
             frameAnimationDictionary[animation.name] = SKAction.sequence(frameActionArray)
         }
         
@@ -205,7 +206,7 @@ public class EDArmatureNode: SKNode {
         }
     }
     
-    public func playAnimation(name: String) {
+    public func playAnimation(name: String, completion: (Void -> Void)?) {
         
         self.stopAllAction()
         
@@ -226,11 +227,15 @@ public class EDArmatureNode: SKNode {
         }
         
         if let eventAction = self.frameAnimationDictionary[name] {
-            self.runAction(eventAction)
+            if let completion = completion {
+                self.runAction(eventAction, completion: completion)
+            } else {
+                self.runAction(eventAction)
+            }
         }
         
         for armatureNode in self.childArmatureNodes {
-            armatureNode.playAnimation(name)
+            armatureNode.playAnimation(name, completion: nil)
         }
     }
     
